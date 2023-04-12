@@ -1,6 +1,7 @@
  using UnityEngine;
  using System.Collections;
  using System.Collections.Generic;
+ using System.Linq;
  using FoodMatch;
 
  public class GameManager : MonoBehaviour 
@@ -23,8 +24,8 @@
                  {
                      hit.transform.position = targetPos[m_targetCount].position;
                      m_ClickedItems.Add(hit.transform.GetComponent<FoodPrefabItem>());
-                     CheckMatch(hit.transform.GetComponent<FoodPrefabItem>().FoodItemType);
                      m_targetCount++;
+                     CheckMatch(hit.transform.GetComponent<FoodPrefabItem>().FoodItemType);
                  }
                  else
                  {
@@ -39,28 +40,40 @@
      private void CheckMatch(Constants.FoodTypes foodType)
      {
          int matchCount = 0;
-         foreach (var item in m_ClickedItems)
-         {
-             if (item.FoodItemType == foodType)
-             {
-                 matchCount++;
-             }
-         }
+
+         // Use a lambda expression to count the number of items that match the given food type
+         matchCount = m_ClickedItems.Count(x => x.FoodItemType == foodType);
 
          if (matchCount >= 3)
          {
-             Debug.Log("Matched");
-             var matchedItems = m_ClickedItems.FindAll(x => x.FoodItemType == foodType);
-             m_ClickedItems.RemoveAll(x => x.FoodItemType == foodType);
+             // Use LINQ to find all items that match the given food type and destroy them
+             var matchedItems = m_ClickedItems.Where(x => x.FoodItemType == foodType);
              foreach (var item in matchedItems)
              {
                  Destroy(item.gameObject);
              }
 
+             // Remove all items that match the given food type from the list
+             m_ClickedItems.RemoveAll(x => x.FoodItemType == foodType);
+
              m_targetCount = 0;
+
+             SetPositions();
          }
          
          //check for matches
+     }
+     
+     private void SetPositions()
+     {
+         // Cache the Transform component for each item in the m_ClickedItems list
+         var clickedTransforms = m_ClickedItems.Select(item => item.transform).ToList();
+
+         // Iterate over each item and set its position to the corresponding target position
+         for (int i = 0; i < clickedTransforms.Count; i++)
+         {
+             clickedTransforms[i].position = targetPos[i].position;
+         }
      }
 
      #endregion
