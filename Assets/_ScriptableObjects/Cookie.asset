@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   foodType: 2
   itemPrefab: {fileID: 504467273237075152, guid: 91bb2e54e80ac1a498605486f9adbc19, type: 3}
+  clickedSize: {x: 2, y: 2, z: 2}
+  clickedPos: {x: 0, y: -2.44, z: 0.05}

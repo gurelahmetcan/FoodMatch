@@ -22,10 +22,17 @@
              {
                  if (m_targetCount <= targetPos.Count - 1)
                  {
-                     hit.transform.position = targetPos[m_targetCount].position;
-                     m_ClickedItems.Add(hit.transform.GetComponent<FoodPrefabItem>());
+                     var prefabItem = hit.transform.GetComponent<FoodPrefabItem>();
+                     m_ClickedItems.Add(prefabItem);
+                     prefabItem.transform.localScale = prefabItem.ClickedSize;
+
+                     var position = hit.transform.position;
+                     position = new Vector3(targetPos[m_targetCount].position.x, prefabItem.ClickedPos.y, prefabItem.ClickedPos.z);
+                     //position.z = 0.05f;
+                     hit.transform.position = position;
+                     
                      m_targetCount++;
-                     CheckMatch(hit.transform.GetComponent<FoodPrefabItem>().FoodItemType);
+                     CheckMatch(prefabItem.FoodItemType);
                  }
                  else
                  {
@@ -60,8 +67,6 @@
 
              SetPositions();
          }
-         
-         //check for matches
      }
      
      private void SetPositions()

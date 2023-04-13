@@ -7,4 +7,6 @@ using UnityEngine;
 public class FoodItem : ScriptableObject {
     public Constants.FoodTypes foodType;
     public FoodPrefabItem itemPrefab;
+    public Vector3 clickedSize;
+    public Vector3 clickedPos;
 }
