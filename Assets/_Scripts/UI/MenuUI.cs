@@ -22,7 +22,7 @@ namespace FoodMatch
         private void Start()
         {
             m_PlayButton.DOScale(1.2f, 1f).SetLoops(-1, LoopType.Yoyo);
-            m_StarAnim.DOLocalMoveX(Screen.width / 2f + 100f, 2.5f).SetEase(Ease.Linear).SetLoops(-1);
+            m_StarAnim.DOLocalMoveX(Screen.width / 2f + 100f, 2.5f).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
         }
 
         #endregion
@@ -32,6 +32,11 @@ namespace FoodMatch
         public void OnPlayClick()
         {
             SceneManager.LoadScene("GameScene");
+        }
+
+        public void OnQuitPressed()
+        {
+            Application.Quit();
         }
 
         #endregion
