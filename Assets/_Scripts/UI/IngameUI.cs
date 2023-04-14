@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +12,7 @@ namespace FoodMatch
         #region Fields
 
         [SerializeField] private LevelSuccessUI m_levelSuccessUI;
+        [SerializeField] private TextMeshProUGUI m_LevelText;
 
         #endregion
 
@@ -19,6 +21,8 @@ namespace FoodMatch
         private void Start()
         {
             GameManager.OnGameFinished += OnGameFinished;
+
+            m_LevelText.text = $"LEVEL {Registry.CurrentLevel}";
         }
 
         private void OnDestroy()
